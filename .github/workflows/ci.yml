@@ -131,7 +131,3 @@ jobs:
     - name: Run pytest
       shell: bash
       run: poetry run python -m pytest --cov=. --cov-report=xml
-
-    - name: Upload coverage to Codecov
-      shell: bash
-      run: poetry run codecov --flags unittests -e OS -e PYTHON --tries 20
