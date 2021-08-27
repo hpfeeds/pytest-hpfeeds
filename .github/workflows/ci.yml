@@ -53,19 +53,19 @@ jobs:
 
     - name: Run pyupgrade
       shell: bash
-      run: poetry run find pytest-hpfeeds tests -name '*.py' -exec python -m pyupgrade --py38-plus {} + && git diff --exit-code
+      run: poetry run find pytest_hpfeeds tests -name '*.py' -exec python -m pyupgrade --py38-plus {} + && git diff --exit-code
 
     - name: Run isort
       shell: bash
-      run: poetry run python -m isort -c --diff pytest-hpfeeds tests
+      run: poetry run python -m isort -c --diff pytest_hpfeeds tests
 
     - name: Run black
       shell: bash
-      run: poetry run python -m black --check --diff pytest-hpfeeds tests
+      run: poetry run python -m black --check --diff pytest_hpfeeds tests
 
     - name: Run flake8
       shell: bash
-      run: poetry run python -m flake8 pytest-hpfeeds tests
+      run: poetry run python -m flake8 pytest_hpfeeds tests
 
     - name: Run poetry build
       shell: bash
