@@ -1,4 +1,10 @@
+import asyncio
+import os
+
+from hpfeeds.asyncio import ClientSession
+import pytest
 from pytest_docker_tools import container, fetch
+from pytest_docker_tools.wrappers import Container
 
 hpfeeds_broker_image = fetch(repository="hpfeeds/hpfeeds-broker:latest")
 
@@ -19,3 +25,18 @@ hpfeeds_broker = container(
         "20000/tcp": None,
     },
 )
+
+
+@pytest.fixture(scope="function")
+async def hpfeeds_client(
+    hpfeeds_broker: Container, loop: asyncio.AbstractEventLoop
+) -> ClientSession:
+    if os.environ.get("CI", ""):
+        host = hpfeeds_broker.ips.primary
+        port = 20000
+    else:
+        host = "127.0.0.1"
+        port = int(hpfeeds_broker.ports["20000/tcp"][0])
+
+    async with ClientSession(host, port, "test", "test") as session:
+        yield session

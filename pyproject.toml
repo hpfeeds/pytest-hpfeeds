@@ -22,6 +22,7 @@ hpfeeds = "pytest_hpfeeds.plugin"
 python = "^3.8"
 pytest = "^6.2.4"
 pytest-docker-tools = "^3.1.0"
+hpfeeds = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.12.1"
@@ -30,6 +31,7 @@ flake8 = "^3.9.2"
 isort = "^5.9.3"
 pyupgrade = "^2.24.0"
 mypy = "^0.910"
+pytest-aiohttp = "^0.3.0"
 
 [tool.black]
 target-version = ["py38", "py39"]
