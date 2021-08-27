@@ -60,7 +60,7 @@ CURRENT_DIR = pathlib.Path(__file__).parent
 
 image = image_or_build(
     environ_key='IMAGE_ID',
-    path=CURRENT_DIR,
+    path=str(CURRENT_DIR),
 )
 
 honeypot = container(
