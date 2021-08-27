@@ -78,7 +78,7 @@ honeypot = container(
 )
 ```
 
-To learn more about what this is doing, you should read the pytest-docker-tools [README])(https://github.com/Jc2k/pytest-docker-tools/blob/main/README.md). But some key points are:
+To learn more about what this is doing, you should read the pytest-docker-tools [README](https://github.com/Jc2k/pytest-docker-tools/blob/main/README.md). But some key points are:
 
 * Variables are automatically interpolated against pytest fixtures. So `"{hpfeeds_broker.ips.primary}"` resolves the `hpfeeds_broker` fixture (causing an ephemeral broker container to be started) and gets its main IP to pass to your honeypot image.
 * The `image` fixture lets you test an existing image (one that exists locally). The `build` fixture lets you do iterative development - it effectively does `docker build` every time you run your tests. Sometimes you want both. You want your development environment to use the `buld` fixture, but your release pipeline should use the `image` fixture so that it is testing the exact image (bit for bit) that will be deployed. That's what the `image_or_build` fixture is for. If your CI pipeline sets the `IMAGE_ID` environment variable then the existing image is tested. Otherwise pytest will `docker build` a new image.
