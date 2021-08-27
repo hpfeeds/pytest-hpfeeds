@@ -32,6 +32,7 @@ isort = "^5.9.3"
 pyupgrade = "^2.24.0"
 mypy = "^0.910"
 pytest-aiohttp = "^0.3.0"
+codecov = "^2.1.12"
 
 [tool.black]
 target-version = ["py38", "py39"]
