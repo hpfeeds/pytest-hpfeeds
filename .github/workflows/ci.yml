@@ -81,8 +81,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [Ubuntu, MacOS, Windows]
-        python-version: [3.7, 3.8]
+        os: [Ubuntu]
+        python-version: [3.8, 3.9]
 
     env:
       OS: ${{ matrix.os }}
