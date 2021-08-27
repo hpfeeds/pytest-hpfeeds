@@ -6,15 +6,27 @@ import pytest
 from pytest_docker_tools import container, fetch
 from pytest_docker_tools.wrappers import Container
 
+
+@pytest.fixture()
+def hpfeeds_broker_channels():
+    return ["test"]
+
+
+@pytest.fixture()
+def hpfeeds_broker_environment(hpfeeds_broker_channels):
+    channels = ",".join(hpfeeds_broker_channels)
+    return {
+        "HPFEEDS_TEST_SECRET": "test",
+        "HPFEEDS_TEST_SUBCHANS": channels,
+        "HPFEEDS_TEST_PUBCHANS": channels,
+    }
+
+
 hpfeeds_broker_image = fetch(repository="hpfeeds/hpfeeds-broker:latest")
 
 hpfeeds_broker = container(
     image="{hpfeeds_broker_image.id}",
-    environment={
-        "HPFEEDS_TEST_SECRET": "test",
-        "HPFEEDS_TEST_SUBCHANS": "test",
-        "HPFEEDS_TEST_PUBCHANS": "test",
-    },
+    environment=hpfeeds_broker_environment,
     command=[
         "/app/bin/hpfeeds-broker",
         "--bind=0.0.0.0:20000",

@@ -2,6 +2,7 @@
 
 pytest-hpfeeds is a collection of boilerplate to help with smoke/integration testing of honeypots against a hpfeeds broker. It leverages pytest-docker-tools to manage running a test broker inside docker. It provides a `hpfeeds_client` fixture to provide your pytest with a client connected to that broker.
 
+
 ## hpfeeds_broker
 
 This package provides a `hpfeeds_broker` fixture. By referencing this fixture from a test pytest-hpfeeds will automatically start a broker (in a container) before your test and destroy it after the test is completed.
@@ -10,6 +11,9 @@ This package provides a `hpfeeds_broker` fixture. By referencing this fixture fr
 def test_my_broker(hpfeeds_broker):
     assert hpfeeds_broker.ips.primary is not None
 ```
+
+By default the broker is configured with a single user (`test` with a secret of `test`) and a single channel called `test`.
+
 
 ## hpfeeds_client
 
@@ -21,6 +25,25 @@ async def test_my_client(hpfeeds_client):
     hpfeeds_client.publish('test', 'hello')
     assert await hpfeeds_client.read() == ('test', 'test', b'hello')
 ```
+
+
+## hpfeeds_broker_channels
+
+You can implement this fixture in your `conftest.py` to change which channels your broker knows about.
+
+```python
+import pytest
+
+@pytest.fixture()
+def hpfeeds_broker_channels():
+    return ["cowrie.sessions"]
+
+async def test_my_client(hpfeeds_client):
+    hpfeeds_client.subscribe('cowrie.sessions"')
+    hpfeeds_client.publish('cowrie.sessions"', 'hello')
+    assert await hpfeeds_client.read() == ('test', 'cowrie.sessions"', b'hello')
+```
+
 
 ## Testing a honeypot in practice
 
@@ -87,3 +110,5 @@ async def test_honeypot_logs_data(honeypot, hpfeeds_client):
     }
 
 ```
+
+By using `pytest-hpfeeds` and `pytest-docker-tools` most of the heavy lifting of build and starting your containerised honeypot and connecting it to a hpfeeds broker is hidden away. You can concentrating on simulating attacks against the honeypot and verifying the hpfeeds output, making it safe to rapidly deploy to your production environment without regressing your event processing backend.
