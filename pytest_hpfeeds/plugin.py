@@ -74,11 +74,11 @@ async def hpfeeds_client_session(
     hpfeeds_broker_session: Container, loop: asyncio.AbstractEventLoop
 ) -> ClientSession:
     if os.environ.get("CI", ""):
-        host = hpfeeds_broker.ips.primary
+        host = hpfeeds_broker_session.ips.primary
         port = 20000
     else:
         host = "127.0.0.1"
-        port = int(hpfeeds_broker.ports["20000/tcp"][0])
+        port = int(hpfeeds_broker_session.ports["20000/tcp"][0])
 
     async with ClientSession(host, port, "test", "test") as session:
         yield session
