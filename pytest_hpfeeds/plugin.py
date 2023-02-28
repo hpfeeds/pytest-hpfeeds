@@ -38,6 +38,21 @@ hpfeeds_broker = container(
     },
 )
 
+hpfeeds_broker_session = container(
+    image="{hpfeeds_broker_image.id}",
+    environment=hpfeeds_broker_environment,
+    command=[
+        "/app/bin/hpfeeds-broker",
+        "--bind=0.0.0.0:20000",
+        # Read user creds from environment variables
+        "--auth=env",
+    ],
+    ports={
+        "20000/tcp": None,
+    },
+    scope="session",
+)
+
 
 @pytest.fixture(scope="function")
 async def hpfeeds_client(
