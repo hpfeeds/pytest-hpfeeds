@@ -80,8 +80,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/pytest-hpfeeds-${{ steps.tag.outputs.tag }}.tar.gz
-          asset_name: pytest-hpfeeds-${{ steps.tag.outputs.tag }}.tar.gz
+          asset_path: dist/pytest_hpfeeds-${{ steps.tag.outputs.tag }}.tar.gz
+          asset_name: pytest_hpfeeds-${{ steps.tag.outputs.tag }}.tar.gz
           asset_content_type: application/gzip
 
       - name: Upload Linux checksum file asset
