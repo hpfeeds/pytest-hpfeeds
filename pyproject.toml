@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-hpfeeds"
-version = "0.2.0"
+version = "0.2.1"
 description = "Helpers for testing hpfeeds in your python project"
 authors = ["John Carr <john.carr@unrouted.co.uk>"]
 license = "Apache-2.0"
