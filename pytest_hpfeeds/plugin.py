@@ -7,12 +7,12 @@ from pytest_docker_tools import container, fetch
 from pytest_docker_tools.wrappers import Container
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def hpfeeds_broker_channels():
     return ["test"]
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def hpfeeds_broker_environment(hpfeeds_broker_channels):
     channels = ",".join(hpfeeds_broker_channels)
     return {
